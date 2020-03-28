@@ -10,5 +10,61 @@
     </parent>
     <artifactId>serenity-tests</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>serenity-automation</groupId>
+            <artifactId>serenity-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <includes>
+                        <include>**/runner/*.java</include>
+                    </includes>
+                    <systemPropertyVariables>
+                        <tags>${tags}</tags>
+                        <systemPropertyVariables>
+                            <CPU_NUMBER_MULTIPLIER_FOR_NUMBER_OF_THREADS_IN_TEST_SUITE_RUNNER>1
+                            </CPU_NUMBER_MULTIPLIER_FOR_NUMBER_OF_THREADS_IN_TEST_SUITE_RUNNER>
+                        </systemPropertyVariables>
+                    </systemPropertyVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>net.serenity-bdd.maven.plugins</groupId>
+                <artifactId>serenity-maven-plugin</artifactId>
+                <version>${serenity.version}</version>
+                <configuration>
+                    <tags>${tags}</tags>
+                    <reports>single-page-html</reports>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>serenity-reports</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
